@@ -24,8 +24,16 @@ single small JSON file, no deep learning framework needed at inference time.
 """
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageOps
 from numpy.lib.stride_tricks import sliding_window_view
+
+# Optional: lets PIL open iPhone .HEIC/.HEIF photos. Falls back silently if
+# the package isn't installed (then just convert HEIC -> JPG before using).
+try:
+    import pillow_heif
+    pillow_heif.register_heif_opener()
+except ImportError:
+    pass
 
 
 def _load_gray(img: Image.Image) -> np.ndarray:
@@ -106,7 +114,9 @@ FEATURE_ORDER = [
 
 
 def extract_features(image_path: str, size: int = 512) -> dict:
-    img = Image.open(image_path).convert("RGB")
+    img = Image.open(image_path)
+    img = ImageOps.exif_transpose(img)  # fix sideways phone photos
+    img = img.convert("RGB")
     img = img.resize((size, size))
     gray = _load_gray(img)
 

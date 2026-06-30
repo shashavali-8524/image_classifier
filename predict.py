@@ -11,6 +11,7 @@ on a phone.
 """
 
 import json
+import os
 import sys
 
 import numpy as np
@@ -18,7 +19,9 @@ import numpy as np
 from features import extract_features, feature_vector
 
 
-def load_model(path="model.json"):
+def load_model(path=None):
+    if path is None:
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "model.json")
     with open(path) as f:
         return json.load(f)
 
