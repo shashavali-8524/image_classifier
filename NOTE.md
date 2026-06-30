@@ -1,12 +1,12 @@
 # Note: Spot the Fake Photo
 
-**Approach.** I treat this as classic signal processing, not deep learning. A
+Approach. I treat this as classic signal processing, not deep learning. A
 screen recapture has three give-aways that a real-world photo doesn't:
-1. **Pixel-grid / moire pattern** — re-photographing a screen captures its
+1. Pixel-grid / moire pattern — re-photographing a screen captures its
    sub-pixel grid, which shows up as an unusually sharp, regular peak in the
    image's 2D frequency spectrum (FFT). I measure how "peaky" the
    mid-frequency ring is relative to its local average.
-2. **Colour cast & flat saturation** — screens are slightly blue-shifted and
+2. Colour cast & flat saturation — screens are slightly blue-shifted and
    less saturated than light reflecting off real objects.
 3. **Glare** — small bright specular patches from the glass/screen surface.
 4. **Slight blur/sharpness shift** from the recapture, measured via
